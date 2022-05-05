@@ -1,0 +1,63 @@
+html, body {
+    width: 200px;
+    margin: auto;
+    padding: 0px;
+}
+
+.hidden {
+  display: none;
+}
+
+.greymode {
+    background-color: grey;
+    color: white;
+}
+
+.darkmode {
+    background-color: black;
+    color: white;
+}
+
+.title {
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.version {
+    text-align: left;
+    font-size: .8em;
+}
+
+.button {
+    margin: 3% auto;
+    padding: 4px;
+    text-align: center;
+    font-size: 1.5em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.available:hover {
+    background-color: #8bc65a;
+}
+
+.available {
+    background-color: #45c65a;
+}
+
+.backlog:hover {
+    background-color: #fec839;
+}
+
+.backlog {
+    background-color: #fe9339;
+}
+
+.disable {
+   background-color: #FF0000;
+}
+
+.disable:hover {
+    background-color: #ff9999;
+
+}
