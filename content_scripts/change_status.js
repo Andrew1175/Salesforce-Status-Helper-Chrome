@@ -34,7 +34,7 @@
 			str = document.getElementsByClassName("slds-dropdown__item awayStatus")[0];
 			backlogstatus = str.getElementsByTagName("a")[0];
 			canceled = !backlogstatus.dispatchEvent(evt);
-			browser.runtime.sendMessage({
+			chrome.runtime.sendMessage({
 				command: "backlogNotification"
 			});
 		}
@@ -64,7 +64,7 @@
 			str = document.getElementsByClassName("slds-dropdown__item onlineStatus")[0];
 			backlogstatus = str.getElementsByTagName("a")[0];
 			canceled = !backlogstatus.dispatchEvent(evt);
-			browser.runtime.sendMessage({
+			chrome.runtime.sendMessage({
 				command: "availableNotification"
 			});
 		}
@@ -75,12 +75,12 @@
 		backlogInterval = null
 		clearInterval(availableInterval);
 		availableInterval = null
-		browser.runtime.sendMessage({
+		chrome.runtime.sendMessage({
 			command: "disableNotification"
 		});
 	}
 		
-	browser.runtime.onMessage.addListener((message) => {
+	chrome.runtime.onMessage.addListener((message) => {
 		if (message.command === "Backlog") {
 			clearInterval(availableInterval);
 			availableInterval = null

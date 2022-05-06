@@ -65,14 +65,7 @@ function listenForClicks() {
 	});
 }
 
-chrome.action.onClicked.addListener(async (tab) => {
-
-chrome.scripting.executeScript({
-	target: {tabId: tab.id},
-	files: ['/content_scripts/change_status.js']
-	})
-		.then(listenForClicks);
-});
+listenForClicks();
 
 chrome.runtime.onMessage.addListener((message) => {
 	if (message.command === "disableNotification") {

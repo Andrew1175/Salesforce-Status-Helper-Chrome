@@ -5,10 +5,36 @@
   "version": "1.2",
 
   "description": "Click your preferred Omni-Channel status. The chosen status will remain active until disabled. This is useful for when Omni-Channel disconnects you unexpectedly and without warning.",
-  "homepage_url": "https://github.com/Andrew1175/Salesforce-Status-Helper",
+  "homepage_url": "https://github.com/Andrew1175/Salesforce-Status-Helper---Chrome",
   "icons": {
-    "48": "icons/zscaler-icon-96.jpg"
+    "16": "icons/zscaler-icon-16.png",
+    "24": "icons/zscaler-icon-24.png",
+    "32": "icons/zscaler-icon-32.png",
+    "48": "icons/zscaler-icon-48.png",
+    "96": "icons/zscaler-icon-96.png"
   },
+
+  "action": {
+    "default_icon": {
+      "16": "icons/zscaler-icon-16.png",
+      "24": "icons/zscaler-icon-24.png",
+      "32": "icons/zscaler-icon-32.png",
+      "48": "icons/zscaler-icon-48.png",
+      "96": "icons/zscaler-icon-96.png"
+    },
+    "default_title": "Status Helper",
+    "default_popup": "popup/choose_status.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.salesforce.com/*",
+        "*://*.force.com/*"
+      ],
+      "js": [ "content_scripts/change_status.js" ]
+    }
+  ],
 
   "permissions": [
     "tabs",
@@ -19,12 +45,6 @@
   "host_permissions": [
     "*://*.salesforce.com/*",
     "*://*.force.com/*"
-  ],
-
-  "action": {
-    "default_icon": "icons/zscaler-icon-48.jpg",
-    "default_title": "Status Helper",
-    "default_popup": "popup/choose_status.html"
-  }
+  ]
 
 }
