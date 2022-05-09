@@ -10,9 +10,12 @@ Every 15 seconds the extension will verify that you're still logged in with the 
 
 If the extension detects that you're 'On a Web Case' it will NOT change your status. You will have to manually change out of it first.
 
+NOTE: This will ONLY work in *.salesforce.com or *.force.com domains. If you try to set your status in another tab without these domains nothing will happen.
+
 Troubleshooting:
 
 If you open Web Developer Tools by either pressing 'F12' or by going into Settings > More Tools > Developer Tools you will see console logs every 15 seconds indicating status health checks occurring.
+
 NOTE: You will only see these health check messages if you have Available or Backlog enabled.
 
 Features to come... maybe:
