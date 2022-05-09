@@ -12,7 +12,7 @@ If the extension detects that you're 'On a Web Case' it will NOT change your sta
 
 Troubleshooting:
 
-If you open Web Developer Tools by either pressing 'F12' or by going into Settings > More Tools > Web Developer Tools you will see console logs every 15 seconds indicating status health checks occurring.
+If you open Web Developer Tools by either pressing 'F12' or by going into Settings > More Tools > Developer Tools you will see console logs every 15 seconds indicating status health checks occurring.
 NOTE: You will only see these health check messages if you have Available or Backlog enabled.
 
 Features to come... maybe:
