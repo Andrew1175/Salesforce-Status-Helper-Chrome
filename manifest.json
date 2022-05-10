@@ -2,7 +2,7 @@
 
   "manifest_version": 3,
   "name": "Salesforce Status Helper",
-  "version": "1.4",
+  "version": "1.5",
 
   "description": "Salesforce Status Helper helps with keeping you logged into Omni-Channel when unxpected disconnects occur.",
   "homepage_url": "https://github.com/Andrew1175/Salesforce-Status-Helper---Chrome",

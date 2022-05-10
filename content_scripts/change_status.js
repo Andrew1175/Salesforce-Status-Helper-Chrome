@@ -40,16 +40,16 @@
 			str = document.getElementsByClassName("slds-dropdown__item awayStatus")[0];
 			try {
 				backlogstatus = str.getElementsByTagName("a")[0];
+				clickBacklog = !backlogstatus.dispatchEvent(evt);
+				browser.runtime.sendMessage({
+					command: "backlogNotification"
+				});
 			} catch {
 				dropDown = document.getElementsByClassName("slds-button slds-button_icon-container slds-button_icon-x-small")[6];
 				clickdropDown = !dropDown.dispatchEvent(evt);
 				alert("Omni-Channel error detected. Please try setting your status again.")
 				backlogstatus = str.getElementsByTagName("a")[0];
 			}
-			clickBacklog = !backlogstatus.dispatchEvent(evt);
-			browser.runtime.sendMessage({
-				command: "backlogNotification"
-			});
 		}
 	}
 
@@ -77,16 +77,16 @@
 			str = document.getElementsByClassName("slds-dropdown__item onlineStatus")[0];
 			try {
 				availableStatus = str.getElementsByTagName("a")[0];
+				clickAvailable = !availableStatus.dispatchEvent(evt);
+				browser.runtime.sendMessage({
+					command: "availableNotification"
+				});
 			} catch {
 				dropDown = document.getElementsByClassName("slds-button slds-button_icon-container slds-button_icon-x-small")[6];
 				clickdropDown = !dropDown.dispatchEvent(evt);
 				alert("Omni-Channel error detected. Please try setting your status again.")
 				availableStatus = str.getElementsByTagName("a")[0];
 			}
-			clickAvailable = !availableStatus.dispatchEvent(evt);
-			browser.runtime.sendMessage({
-				command: "availableNotification"
-			});
 		}
 	}
 		
