@@ -13,11 +13,9 @@
 	var str;
 	var backlogstatus;
 	var availableStatus;
-	var statusBar;
 	var dropDown;
 	var clickBacklog;
 	var clickAvailable;
-	var clickstatusBar;
 	var clickdropDown;
 
   
@@ -47,7 +45,7 @@
 			} catch {
 				dropDown = document.getElementsByClassName("slds-button slds-button_icon-container slds-button_icon-x-small")[4];
 				clickdropDown = !dropDown.dispatchEvent(evt);
-				alert("Omni-Channel error detected. Please wait a moment while Status Helper attempts to change your status.")
+				alert("Omni-Channel error detected. Please wait a moment while Status Helper attempts to change your status.");
 			}
 		}
 	}
@@ -83,7 +81,7 @@
 			} catch {
 				dropDown = document.getElementsByClassName("slds-button slds-button_icon-container slds-button_icon-x-small")[4];
 				clickdropDown = !dropDown.dispatchEvent(evt);
-				alert("Omni-Channel error detected. Please wait a moment while Status Helper attempts to change your status.")
+				alert("Omni-Channel error detected. Please wait a moment while Status Helper attempts to change your status.");
 			}
 		}
 	}
