@@ -39,7 +39,7 @@
 			try {
 				backlogstatus = str.getElementsByTagName("a")[0];
 				clickBacklog = !backlogstatus.dispatchEvent(evt);
-				browser.runtime.sendMessage({
+				chrome.runtime.sendMessage({
 					command: "backlogNotification"
 				});
 			} catch {
@@ -75,7 +75,7 @@
 			try {
 				availableStatus = str.getElementsByTagName("a")[0];
 				clickAvailable = !availableStatus.dispatchEvent(evt);
-				browser.runtime.sendMessage({
+				chrome.runtime.sendMessage({
 					command: "availableNotification"
 				});
 			} catch {
