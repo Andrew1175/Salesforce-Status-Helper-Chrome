@@ -1,6 +1,6 @@
 Salesforce Status Helper created by Drew Rutherford
 
-Available on Chrome:
+Available on Chrome: 'Awaiting approval'
 
 -----------------------------------------------------------------------------------------------------
 
