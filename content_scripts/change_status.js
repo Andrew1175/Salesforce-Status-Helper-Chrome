@@ -17,6 +17,8 @@
 	var clickBacklog;
 	var clickAvailable;
 	var clickdropDown;
+	var refreshButton;
+	var clickRefresh;
 
   
 	function changeToBacklog() {
@@ -91,9 +93,20 @@
 		backlogInterval = null
 		clearInterval(availableInterval);
 		availableInterval = null
+		clearInterval(refreshInterval);
+		refreshInterval = null
 		chrome.runtime.sendMessage({
 			command: "disableNotification"
 		});
+	}
+
+	function refreshOmni() {
+		evt = document.createEvent("MouseEvents");
+		evt.initMouseEvent("click", true, true, window,
+			0, 0, 0, 0, 0, false, false, false, false, 0, null);
+		str = document.getElementsByClassName("slds-dropdown__item refreshTab")[0];
+		refreshButton = str.getElementsByClassName("slds-truncate")[0];
+		clickRefresh = !refreshButton.dispatchEvent(evt);
 	}
 		
 	chrome.runtime.onMessage.addListener((message) => {
@@ -102,8 +115,11 @@
 			availableInterval = null
 			clearInterval(backlogInterval);
 			backlogInterval = null
+			clearInterval(refreshInterval);
+			refreshInterval = null
 			changeToBacklog()
 			backlogInterval = setInterval(changeToBacklog, 15000);
+			refreshInterval = setInterval(refreshOmni, 60000);
 			alert("You have set your Omni-Channel status to Backlog")
 		}
 		else if (message.command === "Available") {
@@ -111,8 +127,11 @@
 			backlogInterval = null
 			clearInterval(availableInterval);
 			availableInterval = null
+			clearInterval(refreshInterval);
+			refreshInterval = null
 			changeToAvailable()
 			availableInterval = setInterval(changeToAvailable, 15000);
+			refreshInterval = setInterval(refreshOmni, 60000);
 			alert("You have set your Omni-Channel status to Available")
 		}
 		else if (message.command === "Disable") {
