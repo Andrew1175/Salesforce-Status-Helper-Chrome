@@ -7,6 +7,7 @@
 
 	var backlogInterval;
 	var availableInterval;
+	var refreshInterval;
 	var onlinestatus;
 	var awaystatus;
 	var evt;
@@ -17,6 +18,8 @@
 	var clickBacklog;
 	var clickAvailable;
 	var clickdropDown;
+	var omniAction;
+	var omniTab;
 	var refreshButton;
 	var clickRefresh;
 
@@ -101,12 +104,20 @@
 	}
 
 	function refreshOmni() {
-		evt = document.createEvent("MouseEvents");
-		evt.initMouseEvent("click", true, true, window,
-			0, 0, 0, 0, 0, false, false, false, false, 0, null);
-		str = document.getElementsByClassName("slds-dropdown__item refreshTab")[0];
-		refreshButton = str.getElementsByClassName("slds-truncate")[0];
-		clickRefresh = !refreshButton.dispatchEvent(evt);
+		try {
+			evt = document.createEvent("MouseEvents");
+			evt.initMouseEvent("click", true, true, window,
+				0, 0, 0, 0, 0, false, false, false, false, 0, null);
+			omniAction = document.querySelector("[title='Actions for Omni Supervisor']");
+			omniTab = omniAction.getElementsByClassName("slds-dropdown__item refreshTab")[0];
+			refreshButton = omniTab.getElementsByClassName("slds-truncate")[0];
+			clickRefresh = !refreshButton.dispatchEvent(evt);
+			console.log("Omni Supervisor was successfully refreshed.")
+		}
+		catch (error) {
+			console.log("Omni Supervisor ws not detected in any Salesforce tab. Reference the following error:")
+			console.log(error)
+		}
 	}
 		
 	chrome.runtime.onMessage.addListener((message) => {
