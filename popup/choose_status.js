@@ -99,6 +99,7 @@ chrome.runtime.onMessage.addListener((message) => {
 	if (message.command === "disableNotification") {
 		chrome.notifications.create(disableNotification,{
 			type: "basic",
+			iconUrl: chrome.runtime.getURL("/icons/zscaler-icon-96.jpg"),
 			title: "Salesforce Status Helper",
 			message: "Status Helper has been disabled"
 		});
@@ -106,6 +107,7 @@ chrome.runtime.onMessage.addListener((message) => {
 	else if (message.command === "backlogNotification") {
 		chrome.notifications.create(backlogNotification,{
 			type: "basic",
+			iconUrl: chrome.runtime.getURL("/icons/zscaler-icon-96.jpg"),
 			title: "Salesforce Status Helper",
 			message: "Your status has been updated to: Backlog"
 		});
@@ -113,6 +115,7 @@ chrome.runtime.onMessage.addListener((message) => {
 	else if (message.command === "availableNotification") {
 		chrome.notifications.create(availableNotification,{
 			type: "basic",
+			iconUrl: chrome.runtime.getURL("/icons/zscaler-icon-96.jpg"),
 			title: "Salesforce Status Helper",
 			message: "Your status has been updated to: Available"
 		});
