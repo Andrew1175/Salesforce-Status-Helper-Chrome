@@ -1,6 +1,7 @@
 var disableNotification = "disable-notification"
 var backlogNotification = "backlog-notification"
 var availableNotification = "available-notification"
+var offlineNotification = "offline-notification"
 var selectedsite;
 
 function listenForClicks() {
@@ -236,39 +237,54 @@ function restore_options() {
 document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById("saveSettingsButton").addEventListener('click',
     save_options);
+chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    var tabId = tabs[0];
+    chrome.scripting.executeScript({
+        target: { tabId: tabId.id },
+        files: ['/content_scripts/change_status.js']
+    });
+});
 listenForClicks();
 
-chrome.runtime.onMessage.addListener((message) => {
-    if (message.command === "disableNotification") {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    chrome.notifications.clear(disableNotification);
+    chrome.notifications.clear(backlogNotification);
+    chrome.notifications.clear(availableNotification);
+    chrome.notifications.clear(offlineNotification);
+    if (request.message === "disableNotification") {
         chrome.notifications.create(disableNotification, {
             type: "basic",
-            iconUrl: chrome.runtime.getURL("/icons/zscaler-icon-96.jpg"),
+            iconUrl: chrome.runtime.getURL("/icons/zscaler-icon-96.png"),
             title: "Salesforce Status Helper",
             message: "Status Helper has been disabled"
         });
+        sendResponse({ response: "Disable message received" });
     }
-    else if (message.command === "backlogNotification") {
+    else if (request.message === "backlogNotification") {
         chrome.notifications.create(backlogNotification, {
             type: "basic",
-            iconUrl: chrome.runtime.getURL("/icons/zscaler-icon-96.jpg"),
+            iconUrl: chrome.runtime.getURL("/icons/zscaler-icon-96.png"),
             title: "Salesforce Status Helper",
             message: "Your status has been updated to: Backlog"
         });
+        sendResponse({ response: "Backlog message received" });
     }
-    else if (message.command === "availableNotification") {
+    else if (request.message === "availableNotification") {
         chrome.notifications.create(availableNotification, {
             type: "basic",
-            iconUrl: chrome.runtime.getURL("/icons/zscaler-icon-96.jpg"),
+            iconUrl: chrome.runtime.getURL("/icons/zscaler-icon-96.png"),
             title: "Salesforce Status Helper",
             message: "Your status has been updated to: Available"
         });
+        sendResponse({ response: "Available message received" });
     }
-    else if (message.command === "offlineNotification") {
-        chrome.notifications.create(availableNotification, {
+    else if (request.message === "offlineNotification") {
+        chrome.notifications.create(offlineNotification, {
             type: "basic",
-            iconUrl: chrome.runtime.getURL("/icons/zscaler-icon-96.jpg"),
+            iconUrl: chrome.runtime.getURL("/icons/zscaler-icon-96.png"),
             title: "Salesforce Status Helper",
             message: "Your status has been updated to: Offline"
         });
+        sendResponse({ response: "Offline message received" });
     }
 });
