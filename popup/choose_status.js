@@ -94,6 +94,7 @@ function listenForClicks() {
 
     document.getElementById("queuehours_checkbox").addEventListener('change', function () {
         let queueHoursCheckbox = document.getElementById("queuehours_checkbox");
+        var autoQueueBox = document.getElementById("enableQueue_checkbox");
         let statusSection = document.getElementById("status-section");
         let queueSection = document.getElementById("queue-section");
         if (queueHoursCheckbox.checked) {
@@ -103,6 +104,9 @@ function listenForClicks() {
         else {
             queueSection.setAttribute("hidden", "hidden");
             statusSection.removeAttribute("hidden");
+            if (autoQueueBox.checked) {
+                autoQueueBox.click();
+            }
         }
     });
 
@@ -230,6 +234,7 @@ function restore_options() {
         else {
             queueSection.setAttribute("hidden", "hidden");
             statusSection.removeAttribute("hidden");
+            document.getElementById("enableQueue_checkbox").checked = false;
         }
     });
 }
@@ -286,5 +291,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             message: "Your status has been updated to: Offline"
         });
         sendResponse({ response: "Offline message received" });
+    }
+    if (request.message === "changeIconEnable") {
+        chrome.browserAction.setIcon({ path: "/icons/zscaler-icon-24-running.png" });
+        sendResponse({ response: "Change icon message received" });
+    }
+    else if (request.message === "changeIconDefault") {
+        chrome.browserAction.setIcon({ path: "/icons/zscaler-icon-24.png" });
+        sendResponse({ response: "Change icon message received" });
     }
 });
