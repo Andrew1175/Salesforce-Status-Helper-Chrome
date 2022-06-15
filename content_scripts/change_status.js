@@ -148,9 +148,6 @@
         clearInterval(autoQueueInterval);
         autoQueueInterval = null;
         console.log("Automated Queue has been disabled");
-        chrome.runtime.sendMessage({
-            command: "changeIconDefault"
-        });
     }
 
 
@@ -266,6 +263,9 @@
         }
         else if (message.command === "disableAutoQueue") {
             disableAutoQueue();
+            chrome.runtime.sendMessage({
+                command: "changeIconDefault"
+            });
         }
     });
 })();
