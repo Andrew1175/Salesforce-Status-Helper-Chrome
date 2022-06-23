@@ -43,7 +43,7 @@
             try {
                 BacklogStatusButton.click();
                 chrome.runtime.sendMessage({
-                    command: "backlogNotification"
+                    message: "backlogNotification"
                 });
             }
             catch (error) {
@@ -80,7 +80,7 @@
             try {
                 AvailableStatusButton.click();
                 chrome.runtime.sendMessage({
-                    command: "availableNotification"
+                    message: "availableNotification"
                 });
             }
             catch (error) {
@@ -104,7 +104,7 @@
         try {
             OfflineStatusButton.click();
             chrome.runtime.sendMessage({
-                command: "offlineNotification"
+                message: "offlineNotification"
             });
         }
         catch (error) {
@@ -148,7 +148,7 @@
         clearInterval(autoQueueInterval);
         autoQueueInterval = null;
         chrome.runtime.sendMessage({
-            command: "autoQueueDisabled"
+            message: "autoQueueDisabled"
         });
     }
 
@@ -278,10 +278,10 @@
             if (autoQueueInterval == null || autoQueueInterval == 'undefined') {
                 autoQueueInterval = setInterval(autoQueueCheck, 15000);
                 chrome.runtime.sendMessage({
-                    command: "autoQueueEnabled"
+                    message: "autoQueueEnabled"
                 });
                 chrome.runtime.sendMessage({
-                    command: "changeIconEnable"
+                    message: "changeIconEnable"
                 });
             }
             if (refreshInterval == null || refreshInterval == 'undefined') {
@@ -291,7 +291,7 @@
         else if (message.command === "disableAutoQueue") {
             disableAutoQueue();
             chrome.runtime.sendMessage({
-                command: "changeIconDefault"
+                message: "changeIconDefault"
             });
         }
     });

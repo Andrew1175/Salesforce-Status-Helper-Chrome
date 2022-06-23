@@ -257,7 +257,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message === "disableNotification") {
         chrome.notifications.create(disableNotification, {
             type: "basic",
-            iconUrl: chrome.runtime.getURL({ path: "/icons/zscaler-icon-96.png" }),
+            iconUrl: chrome.runtime.getURL("/icons/zscaler-icon-96.png"),
             title: "Salesforce Status Helper",
             message: "Status Helper has been disabled"
         });
@@ -275,7 +275,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     else if (request.message === "availableNotification") {
         chrome.notifications.create(availableNotification, {
             type: "basic",
-            iconUrl: chrome.runtime.getURL({ path: "/icons/zscaler-icon-96.png" }),
+            iconUrl: chrome.runtime.getURL("/icons/zscaler-icon-96.png"),
             title: "Salesforce Status Helper",
             message: "Your status has been updated to: Available"
         });
@@ -284,7 +284,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     else if (request.message === "offlineNotification") {
         chrome.notifications.create(offlineNotification, {
             type: "basic",
-            iconUrl: chrome.runtime.getURL({ path: "/icons/zscaler-icon-96.png" }),
+            iconUrl: chrome.runtime.getURL("/icons/zscaler-icon-96.png"),
             title: "Salesforce Status Helper",
             message: "Your status has been updated to: Offline"
         });
@@ -293,27 +293,27 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     else if (request.message === "autoQueueEnabled") {
         chrome.notifications.create(autoQueueEnabledNotification, {
             type: "basic",
-            iconUrl: chrome.runtime.getURL({ path: "/icons/zscaler-icon-96.png" }),
+            iconUrl: chrome.runtime.getURL("/icons/zscaler-icon-96.png"),
             title: "Salesforce Status Helper",
             message: "Automated Queue has been enabled"
         });
-        sendResponse({ response: "Offline message received" });
+        sendResponse({ response: "autoQueueEnable message received" });
     }
     else if (request.message === "autoQueueDisabled") {
         chrome.notifications.create(autoQueueDisabledNotification, {
             type: "basic",
-            iconUrl: chrome.runtime.getURL({ path: "/icons/zscaler-icon-96.png" }),
+            iconUrl: chrome.runtime.getURL("/icons/zscaler-icon-96.png"),
             title: "Salesforce Status Helper",
             message: "Automated Queue has been disabled"
         });
-        sendResponse({ response: "Offline message received" });
+        sendResponse({ response: "autoQueueDisabled message received" });
     }
     if (request.message === "changeIconEnable") {
         chrome.action.setIcon({ path: "/icons/zscaler-icon-24-running.png" });
-        sendResponse({ response: "Change icon message received" });
+        sendResponse({ response: "Change iconEnable message received" });
     }
     else if (request.message === "changeIconDefault") {
         chrome.action.setIcon({ path: "/icons/zscaler-icon-24.png" });
-        sendResponse({ response: "Change icon message received" });
+        sendResponse({ response: "Change iconDisable message received" });
     }
 });
