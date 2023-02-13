@@ -4,14 +4,12 @@ var availableNotification = "available-notification";
 var offlineNotification = "offline-notification";
 var autoQueueEnabledNotification = "autoQueueEnabled-notification";
 var autoQueueDisabledNotification = "autoQueueDisabled-notification";
+var omniErrorNotification = "omniError-notification";
 var selectedsite;
 
 function listenForClicks() {
     document.addEventListener("click", (e) => {
 
-        /**
-        * Replace Omni status with what's selected.
-        */
         function setStatus(statusName) {
             switch (statusName) {
                 case "Available":
@@ -241,18 +239,6 @@ function restore_options() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', restore_options);
-document.getElementById("saveSettingsButton").addEventListener('click',
-    save_options);
-chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    var tabId = tabs[0];
-    chrome.scripting.executeScript({
-        target: { tabId: tabId.id },
-        files: ['/content_scripts/change_status.js']
-    });
-});
-listenForClicks();
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message === "disableNotification") {
         chrome.notifications.create(disableNotification, {
@@ -308,7 +294,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         });
         sendResponse({ response: "autoQueueDisabled message received" });
     }
-    if (request.message === "changeIconEnable") {
+    if (request.message === "omniErrorState") {
+        chrome.notifications.create(omniErrorNotification, {
+            type: "basic",
+            iconUrl: chrome.runtime.getURL("/icons/zscaler-icon-96.png"),
+            title: "Salesforce Status Helper",
+            message: "Omni-Channel is in a error state. Refresh the page to correct this issue."
+        });
+        chrome.action.setIcon({ path: "/icons/zscaler-icon-24-Error.png" });
+    }
+    else if (request.message === "changeIconEnable") {
         chrome.action.setIcon({ path: "/icons/zscaler-icon-24-running.png" });
         sendResponse({ response: "Change iconEnable message received" });
     }
@@ -316,4 +311,50 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         chrome.action.setIcon({ path: "/icons/zscaler-icon-24.png" });
         sendResponse({ response: "Change iconDisable message received" });
     }
+});
+
+document.addEventListener('DOMContentLoaded', restore_options);
+document.getElementById("saveSettingsButton").addEventListener('click',
+    save_options);
+window.onload = () => {
+    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+        var currTabID = tabs[0].id;
+        var currTabURL = tabs[0].url;
+        if (currTabURL == undefined) {
+            currTabURL = "blank";
+        }
+        if (currTabURL.includes("zscalergov.lightning.force.com" || "zscaler.lightning.force.com")) {
+            chrome.scripting.executeScript({
+                target: { tabId: currTabID },
+                files: ["/content_scripts/change_status.js"]
+            });
+            chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+                if (request.message === "allVariablesLoaded") {
+                    listenForClicks();
+                    sendResponse({ response: "allVariablesLoaded message received" });
+                }
+            });
+        }
+    });
+}
+chrome.tabs.onUpdated.addListener(() => {
+    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+        var currTabID = tabs[0].id;
+        var currTabURL = tabs[0].url;
+        if (currTabURL == undefined) {
+            currTabURL = "blank";
+        }
+        if (currTabURL.includes("zscalergov.lightning.force.com" || "zscaler.lightning.force.com")) {
+            chrome.scripting.executeScript({
+                target: { tabId: currTabID },
+                files: ["/content_scripts/change_status.js"]
+            });
+            chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+                if (request.message === "allVariablesLoaded") {
+                    listenForClicks();
+                    sendResponse({ response: "allVariablesLoaded message received" });
+                }
+            });
+        }
+    });
 });
