@@ -136,26 +136,39 @@
 
     function changeToOffline() {
         try {
-            OfflineStatusButton.click();
-            chrome.runtime.sendMessage({
-                message: "offlineNotification"
-            });
+            CurrentStatus = OmniChannelElement.getElementsByTagName("span")[2].innerHTML;
         }
-        catch (error) {
-            alert("Omni-Channel error detected. Please check console for the detailed error");
-            console.log("Unable to set status to Offline due to:", error);
-            console.log("Attempting to fix...");
+        catch {
+            CurrentStatus = "placeholder";
+        }
+        if (CurrentStatus.includes("Offline")) {
+            null;
+        }
+        else if (CurrentStatus.includes("Web Case")) {
+            null;
+        }
+        else {
             try {
-                StatusDropdownButton.click();
-                StatusDropdownButton.click();
-                console.log("Omni-Channel has been fixed. Status will change to Offline at the next health check.");
+                OfflineStatusButton.click();
+                chrome.runtime.sendMessage({
+                    message: "offlineNotification"
+                });
             }
             catch (error) {
-                console.log("Unable to fix Omni-Channel due to:", error);
-                console.log("Please manually set your status to fix the issue");
+                alert("Omni-Channel error detected. Please check console for the detailed error");
+                console.log("Unable to set status to Offline due to:", error);
+                console.log("Attempting to fix...");
+                try {
+                    StatusDropdownButton.click();
+                    StatusDropdownButton.click();
+                    console.log("Omni-Channel has been fixed. Status will change to Offline at the next health check.");
+                }
+                catch (error) {
+                    console.log("Unable to fix Omni-Channel due to:", error);
+                    console.log("Please manually set your status to fix the issue");
+                }
             }
         }
-
     }
 
     function disableHelper() {
@@ -256,6 +269,7 @@
             }
             else if (items.savedStartShift <= currentTime && items.savedEndShift >= currentTime) {
                 changeToOffline();
+                //normally this would be changeToBacklog() but the queue system is configured incorrectly and causing case balancing issues
             }
             else {
                 changeToOffline();
